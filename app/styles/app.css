@@ -1,0 +1,24 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.oferta{
+   position: absolute;
+   width:10rem;
+   top:-2rem;
+   left:-4rem;
+   z-index:-1;
+   opacity:.7;
+}
+.planta{
+   position: absolute;
+   width:2.2rem;
+   bottom:-1.5rem;
+   right:1rem;
+   transform:rotate(30deg);
+   opacity:.9;
+}
+.items{
+   max-width:25rem;
+   margin: 0 auto;
+}
