@@ -1,44 +1,52 @@
-import { Link } from "@remix-run/react"
-import Navbar from "../components/header/navbar"
-import Categorias from "../components/main/categorias"
-import Search from "../components/main/search"
+import {useLoaderData, useOutletContext } from "@remix-run/react"
+import { getData } from "~/services/api.server"
+import Navbar from "~/components/header/navbar"
+import Categories from "~/components/main/categories"
+import Search from "~/components/main/search"
+import { useState,useEffect} from "react"
+import Saucer from "~/components/sauce/saucer"
 
+export const loader = async () => {
+   const data = await getData();
+   return data.data
+}
 const Menu = () => {
-   return (
+   const data = useLoaderData();
+   const {product} = useOutletContext();
+   const [category, setCategory] = useState('');
+   const [filter, setFilter] = useState([]);
+   useEffect(()=>{
+      if(category){
+         const newFilter = data.filter( platillo => platillo.attributes.category === category);
+         setFilter(newFilter)
+      }else{
+         setFilter(data)
+      }
+   },[category]);
+
+      return (
       <>
          <header className="container w-11/12 mx-auto">
-            <Navbar />
+            <Navbar
+               product = {product}
+            />
             <Search />
          </header>
          <main className="container w-11/12 mx-auto">
-            <Categorias />
-            <section className="mt-5 grid gap-10">
-               <div className="p-5 rounded-xl bg-zinc-800 items">
-
-                  <figure className="w-60 mx-auto -my-5">
-                     <img src="https://res.cloudinary.com/dcuzoddes/image/upload/v1680926897/emmanuel-zua-eDG8gsiqkyI-unsplash-removebg-preview_izzf5e.png" alt="sushi" />
-                     <img src="" alt="" />
-                  </figure>
-
-                  <h2 className="text-white font-black text-center text-4xl mt-4">Onigiri</h2>
-
-                  <aside className="flex justify-between text-2xl mt-4 text-gray-300">
-                     <span className="flex items-center gap-1">
-                        <i className='bx bx-time text-white'></i>
-                        20 min
-                     </span>
-                     <span className="flex items-center gap-1"><i className='bx bxs-star text-yellow-500'></i>4.5</span>
-                  </aside>
-
-                  <p className="text-white text py-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates, dolor.</p>
-
-                  <aside className="flex justify-between items-center text-3xl mt-4 text-white">
-                     <p className="font-black text-5xl">$30.00</p>
-                     <Link to="/menu/torta" className="bg-orange-500 border-2 border-orange-400 flex items-center rounded-full p-2">
-                        <i className='bx bx-plus'></i>
-                     </Link>
-                  </aside>
-               </div>
+            <Categories 
+               setCategory = {setCategory}
+               category = {category}
+            />
+            <section className="grid gap-10 mt-10">
+               {filter?.length === 0 ? <p className="text-white font-black text-3xl text-center">No hay elementos a mostrar</p> : (
+                  filter?.map(menu => (
+                     <Saucer
+                        key={menu.id}
+                        menu={menu.attributes}
+                        
+                     />
+                  )))
+               }
             </section>
          </main>
       </>

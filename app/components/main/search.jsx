@@ -1,6 +1,6 @@
 const Search = () => {
    return (
-      <section className="relative">
+      <section className="relative mt-28">
          <div className="mt-5 bg-zinc-800 py-14 rounded-xl relative overflow-hidden z-0">
             <aside className="text-center">
                <h2 className="text-2xl text-white"><span className="text-orange-300 font-black">%10</span> de descuento 🔥
