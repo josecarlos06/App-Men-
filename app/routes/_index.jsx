@@ -7,7 +7,7 @@ export default function Index() {
    return (
       <header className="container w-11/12 mx-auto flex flex-col items-center text-center gap-8">
          <figure className="pt-8 pb-2">
-            <img src="https://res.cloudinary.com/dcuzoddes/image/upload/v1680907391/jesse-ballantyne-9r5kHbw51fk-unsplash-removebg-preview_sxdo5w.png" alt="sushi" />
+            <img src="https://res.cloudinary.com/dcuzoddes/image/upload/v1680979661/emmanuel_zua_e_DG_8gsiqky_I_unsplash_removebg_preview_1d11c5b9ae.png" alt="sushi" />
             
          </figure>
          <h1 className="text-white text-6xl font-black">Danshiri</h1>
