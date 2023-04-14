@@ -23,8 +23,10 @@ export function links() {
 }
 export default function App() {
    // 👁
-   const carritoLs = typeof window !== 'undefined' ? JSON.parse(localStorage.getItem('shop')) ?? [] : null;
+   const carritoLs = typeof window !== 'undefined' && JSON.parse(localStorage.getItem('shop')) || [];
    const [shop, setShop] = useState(carritoLs);
+
+
    const [product, setProduct] = useState(0);
    const [cantidad, setCantidad] = useState(1);
 
@@ -88,4 +90,21 @@ function Document({ children }) {
          </body>
       </html>
    );
+}
+
+export function CatchBoundary(){
+   const error = useCatch();
+   return(
+      <Document>
+         <p className='error'>{error.status} {error.statusText}</p>
+      </Document>
+   )
+}
+
+export function ErrorBoundary({error}){
+   return(
+      <Document>
+         <p className='error'>{error.status} {error.statusText}</p>
+      </Document>
+   )
 }

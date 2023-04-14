@@ -28,3 +28,12 @@
    -webkit-line-clamp:3;
    overflow: hidden;
 }
+.show{
+   position: fixed;
+   top:5rem;
+   right:-200rem;
+   transition: right .5s;
+}
+.active{
+   right: 0;
+}
