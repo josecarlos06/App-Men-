@@ -10,11 +10,21 @@ const Pedido = () => {
       const sumTotal = shop.reduce((total, souceState) => total + (souceState.price * souceState.cantidad), 0);
       setTotal(sumTotal);
    }, [shop]);
+   const handleWhats = (e) =>{
+      e.preventDefault();
 
+      let productosParaWsp = shop.map(producto => ` - ${producto.name}, $${producto.price} `);
+      const productosConFormatoAmigable = productosParaWsp.join('%0A%0A');
+      console.log(productosConFormatoAmigable);
+      let url = 
+      `https://api.whatsapp.com/send?phone=+525539039231&text=Productos:%0A%0A${productosConFormatoAmigable}`;
+      window.open(url)
+  
+   }
    return (
-      <ClientOnly fallback={"cargando"}>
-         {()=>(
-            <main className="flex flex-col container w-11/12 mx-auto gap-5 mt-5 overflow-y-auto max-h-96">
+      <ClientOnly fallback={null}>
+         {() => 
+         <main className="flex flex-col container w-11/12 mx-auto gap-5 mt-5 overflow-y-auto max-h-96">
             {shop?.map(tienda => (
                <aside key={tienda.id} className="flex gap-6 items-center bg-zinc-700 rounded p-5">
                   <figure>
@@ -28,15 +38,17 @@ const Pedido = () => {
                   </div>
                </aside>
             ))}
-            <div className="text-white p-5 font-black text-5xl fixed bottom-0 rigth-0 left-0 w-full mx-auto bg-zinc-800">
+            <form
+               onSubmit={handleWhats}
+               className="text-white p-5 font-black text-5xl fixed bottom-0 rigth-0 left-0 w-full mx-auto bg-zinc-800">
                <h2 className="mb-5">total : ${total}</h2>
                <button
                   type="submit"
                   className='w-full bg-orange-500 text-2xl text-white py-4 px-6 rounded flex items-center justify-center gap-1 transition-transform border-2 border-orange-300 font-black'>Enviar Orden</button>
-            </div>
-         </main>
-         )}
+            </form>
+         </main>}
       </ClientOnly>
    )
+
 }
 export default Pedido
