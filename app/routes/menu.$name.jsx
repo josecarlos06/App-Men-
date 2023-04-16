@@ -41,7 +41,7 @@ const Information = () => {
             <figure className="">
                <img src={image.data.attributes.url} alt={name} className="h-64 object-cover w-full" />
             </figure>
-            <h2 className="text-white font-black text-center text-4xl mt-4">{name}</h2>
+            <h2 className="text-white font-black text-4xl mt-4">{name}</h2>
             <aside className="flex justify-between text-2xl mt-4 text-gray-300">
                <span className="flex items-center gap-1">
                   <i className='bx bx-time text-white'></i>

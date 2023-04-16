@@ -6,7 +6,7 @@ const Saucer = ({menu}) => {
       <article className="rounded-xl bg-zinc-800 items overflow-hidden">
 
          <figure className="">
-            <img src={image.data.attributes.url} alt={name} className="h-64 object-cover w-full"/>
+            <img src={image.data.attributes.url} alt={name} className="h-64 object-cover w-full" loading="lazy"/>
          </figure>
          <main className="p-5">
             <h2 className="text-white font-black text-4xl mt-4">{name}</h2>
