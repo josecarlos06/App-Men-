@@ -1,18 +1,18 @@
-import { onlyData } from '../services/api.server'
+import { onlyData } from '../services/api.server';
 import { useLoaderData, useOutletContext } from '@remix-run/react';
 import { useState } from 'react';
-import Navbar from "~/components/header/navbar"
-import Contador from '~/components/sauce/contador';
+import Navbar from "~/components/header/navbar";
 
 export const loader = async ({ params }) => {
    const data = await onlyData(params.name);
-   return data
+   return data;
 }
 
 const Information = () => {
    const data = useLoaderData();
-   const { carrito, product, cantidad, setCantidad } = useOutletContext();
+   const { carrito, product } = useOutletContext();
    const [alerta, setAlerta] = useState(false);
+   const [cantidad, setCantidad] = useState(1);
    const { name, price, description, time, average, image } = data.data[0].attributes;
    const addShop = e => {
       e.preventDefault();
@@ -25,10 +25,10 @@ const Information = () => {
          image: image.data.attributes.url
       }
       carrito(obj);
-      setAlerta(true)
+      setAlerta(true);
       setTimeout(() => {
-         setAlerta(false)
-      }, 3000)
+         setAlerta(false);
+      }, 3000);
    }
 
    return (
@@ -54,13 +54,25 @@ const Information = () => {
             </aside>
 
             <p className="text-white text py-4">{description}</p>
-            <nav className='flex items-center justify-between'>
+            <header className='flex items-center justify-between'>
                <p className="text-4xl text-white font-black">${price * cantidad}.00 </p>
-               <Contador
-                  cantidad={cantidad}
-                  setCantidad={setCantidad}
-               />
-            </nav>
+               <nav className='flex justify-between my-5 gap-4 flex-wrap'>
+                  <div className='inline-flex items-center text-5xl justify-center text-white bg-zinc-800 p-3 rounded gap-3'>
+                     <button
+                        type='button'
+                        onClick={() => cantidad > 1 && setCantidad(cantidad - 1)}
+                        className='bg-zinc-900 rounded border-2 border-gray-100 px-2'> &ndash;
+                     </button>
+                     <p className='text-3xl font-black'> {cantidad} </p>
+                     <button
+                        type='button'
+                        onClick={() => cantidad < 9 && setCantidad(cantidad + 1)}
+                        className=' bg-zinc-900 rounded border-2 border-gray-100 px-2'>
+                        +
+                     </button>
+                  </div>
+               </nav>
+            </header>
             <button
                type="submit"
                className='w-full bg-orange-500 text-2xl text-white py-4 px-6 rounded flex items-center justify-center gap-1 transition-transform border-2 border-orange-300 font-black'>Agregar al carrito</button>

@@ -25,11 +25,7 @@ export default function App() {
    // 👁
    const carritoLs = typeof window !== 'undefined' && JSON.parse(localStorage.getItem('shop')) || [];
    const [shop, setShop] = useState(carritoLs);
-
-
    const [product, setProduct] = useState(0);
-   const [cantidad, setCantidad] = useState(1);
-
    useEffect(()=>{
       localStorage.setItem('shop', JSON.stringify(shop));
       setProduct(shop.length);
@@ -58,6 +54,11 @@ export default function App() {
       })
       setShop(shopUpdate);
    }
+
+   const deleteProduct=(product)=>{
+      const updateProduct = shop.filter(shopState => shopState.id !== product);
+      setShop(updateProduct);
+   }
    return (
       <Document>
          <Outlet
@@ -65,9 +66,8 @@ export default function App() {
                carrito,
                shop,
                product,
-               cantidad,
-               setCantidad,
-               updateCantidad
+               updateCantidad,
+               deleteProduct
             }}
          />
       </Document>
